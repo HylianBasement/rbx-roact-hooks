@@ -93,8 +93,24 @@ declare namespace RoactHooks {
 	}
 }
 
+/**
+ *  It is required you pass in the Roact you are using, since you can't combine multiple versions of Roact together.
+ * 
+ *  Returns a function that can be used to create a new Roact component with hooks.
+ *  An optional dictionary can be passed in. The following are the valid keys that can be used, and what they do.
+ *
+ *  @param name
+ *  Refers to the name used in debugging. If it is not passed, it'll use the function name of what was passed in.
+ *  For instance, `Hooks.new(Roact)(Component)` will have the component name `"Component"`.
+ *
+ *  @param defaultProps
+ *  Defines default values for props to ensure props will have values even if they were not specified by the parent component.
+ */
 declare interface RoactHooks {
-	new <P = {}>(roact: typeof Roact): (render: RoactHooks.FC<P>) => (props: P) => Roact.Element;
+	new <P = {}>(roact: typeof Roact): (
+		render: RoactHooks.FC<P>,
+		options?: { name?: string, defaultProps: Partial<P> }
+	) => (props: P) => Roact.Element;
 }
 
 declare const RoactHooks: RoactHooks;
