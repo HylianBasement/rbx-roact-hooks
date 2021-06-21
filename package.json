@@ -1,6 +1,6 @@
 {
   "name": "@rbxts/roact-hooks",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Typings for Kampfkarren's roact-hooks module",
   "scripts": {},
   "keywords": [
@@ -10,7 +10,7 @@
     "roact-hooks"
   ],
   "main": "src/init.lua",
-  "typings": "index.d.ts",
+  "typings": "src/index.d.ts",
   "author": "",
   "license": "MPL-2.0",
   "licenses": [
