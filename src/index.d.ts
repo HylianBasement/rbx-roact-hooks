@@ -3,10 +3,6 @@ import Roact from '@rbxts/roact';
 // Hook Functions
 declare namespace RoactHooks {
 	/**
-	 *  A Function Component
-	 */
-	export type FC<P = {}> = (props: P, hooks: HookFunctions) => Roact.Element | undefined;
-	/**
 	 *  Library's hook functions
 	 */
 	export interface HookFunctions {
@@ -53,7 +49,7 @@ declare namespace RoactHooks {
 		   If you’re familiar with Rodux, you already know how this works.
 		 */
 		useReducer<S = {}, A extends Action = AnyAction>(
-			reducer: (state: S, action: A) => void,
+			reducer: RoactHooks.Reducer<S, A>,
 			initialState: S
 		): LuaTuple<[S, (action: A) => void]>;
 	}
@@ -62,9 +58,17 @@ declare namespace RoactHooks {
 // Utility Types
 declare namespace RoactHooks {
 	/**
+	 *  A Function Component
+	 */
+	export type FC<P = {}> = (props: P, hooks: HookFunctions) => Roact.Element | undefined;
+	/**
+	 *  A reducer
+	 */
+	export type Reducer<S = {}, A extends Action = AnyAction> = (state: S, action: A) => S;
+	/**
 	 *  Extracts the props type from a Function Component.
 	 */
-	export type InferFCProps<T> = T extends RoactHooks.FC<infer P> ? P : never;
+	export type InferFCProps<T> = T extends FC<infer P> ? P : never;
 	/**
 	 *  Return type from [Roact.createContext](https://roblox.github.io/roact/api-reference/#roactcreatecontext).
 	 */
