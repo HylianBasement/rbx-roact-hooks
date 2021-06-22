@@ -19,7 +19,7 @@ declare namespace RoactHooks {
 		 *
 		 *  You can also pass in a list of dependencies to `useEffect`. If passed, then only when those dependencies change will the callback function be re-ran.
 		 */
-		useEffect(callback: (() => () => void) | undefined, dependencies?: any[]): void;
+		useEffect(callback: () => (() => void) | void, dependencies?: any[]): void;
 		/** Returns the value of the [context](https://roblox.github.io/roact/advanced/context/). */
 		useContext<T>(context: RoactContext<T>): T;
 		/** 

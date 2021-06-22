@@ -1,6 +1,6 @@
 {
   "name": "@rbxts/roact-hooks",
-  "version": "0.1.0",
+  "version": "0.1.0-ts.0",
   "description": "Typings for Kampfkarren's roact-hooks module",
   "scripts": {},
   "keywords": [
