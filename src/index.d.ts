@@ -109,7 +109,7 @@ declare namespace RoactHooks {
 declare interface RoactHooks {
 	new <P = {}>(roact: typeof Roact): (
 		render: RoactHooks.FC<P>,
-		options?: { name?: string, defaultProps: Partial<P> }
+		options?: { name?: string, defaultProps?: Partial<P> }
 	) => (props: P) => Roact.Element;
 }
 
