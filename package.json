@@ -20,9 +20,9 @@
     }
   ],
   "repository": {
-		"type": "git",
-		"url": "git+https://github.com/Rimuy/rbx-roact-hooks.git"
-	},
+    "type": "git",
+    "url": "git+https://github.com/Rimuy/rbx-roact-hooks.git"
+  },
   "bugs": {
     "url": "https://github.com/Rimuy/rbx-roact-hooks/issues"
   },
