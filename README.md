@@ -84,7 +84,7 @@ export = new Hooks<Props>(Roact)(PrintsOnClick, {
 });
 ```
 
-### useReducer Example
+### Reducer Example
 An alternative to `useState` that uses a reducer rather than state directly. If you’re familiar with Rodux, you already know how this works.
 
 `Stepper.tsx`
@@ -132,13 +132,13 @@ const Stepper: Hooks.FC = (_props, { useReducer }) => {
                         />
                         <textlabel
                                 Key="Counters"
-                                BackgroundTransparency = {1}
-                                Font = {Enum.Font.Code}
+                                BackgroundTransparency={1}
+                                Font={Enum.Font.Code}
                                 LayoutOrder = {1}
-                                Size = {new UDim2(1, 0, 0, 38)}
+                                Size={new UDim2(1, 0, 0, 38)}
                                 Text={tostring(state.count)}
-                                TextColor3 = {new Color3(0, 1, 0)}
-                                TextSize = {32}
+                                TextColor3={new Color3(0, 1, 0)}
+                                TextSize={32}
                         />
                         <textbutton
                                 Key="Increment"
