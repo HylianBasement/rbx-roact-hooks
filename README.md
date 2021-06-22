@@ -76,7 +76,7 @@ const PrintsOnClick: Hooks.FC<Props> = (props, { useCallback }) => {
 	);
 };
 
-export = new Hooks<Props>(Roact)(PrintsOnClick, {
+export = new Hooks(Roact)(PrintsOnClick, {
 	defaultProps: {
 		buttonText: "Click me...",
 		printMessage: "it was clicked!"

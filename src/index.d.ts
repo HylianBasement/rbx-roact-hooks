@@ -43,7 +43,7 @@ declare namespace RoactHooks {
 		 *
 		 *  These can then be used just like normal bindings in Roact.
 		 */
-		useBinding<T>(defaultValue: T): LuaTuple<[Roact.BindingFunction<T>, (newValue: T) => void]>;
+		useBinding<T>(defaultValue: T): LuaTuple<[Roact.Binding<T>, (newValue: T) => void]>;
 		/**
 		 * An alternative to `useState` that uses a reducer rather than state directly.
 		   If you’re familiar with Rodux, you already know how this works.
@@ -76,12 +76,9 @@ declare namespace RoactHooks {
 		Provider: Roact.ComponentConstructor<{
 			value: T;
 		}>;
-		Consumer: Roact.ComponentConstructor<
-			{
-				render: (value: T) => Roact.Element | undefined;
-			},
-			{}
-		>;
+		Consumer: Roact.ComponentConstructor<{
+			render: (value: T) => Roact.Element | undefined;
+		}>;
 	};
 	/**
 	 *  An action type for reducers
@@ -111,10 +108,13 @@ declare namespace RoactHooks {
  *  Defines default values for props to ensure props will have values even if they were not specified by the parent component.
  */
 declare interface RoactHooks {
-	new <P = {}>(roact: typeof Roact): (
-		render: RoactHooks.FC<P>,
-		options?: { name?: string, defaultProps?: Partial<P> }
-	) => (props: P) => Roact.Element;
+	new (roact: typeof Roact): <F extends RoactHooks.FC<any>>(
+		render: F,
+		options?: {
+			name?: string,
+			defaultProps?: Partial<RoactHooks.InferFCProps<F>>
+		}
+	) => (props: RoactHooks.InferFCProps<F>) => Roact.Element;
 }
 
 declare const RoactHooks: RoactHooks;
