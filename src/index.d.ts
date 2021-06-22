@@ -49,7 +49,7 @@ declare namespace RoactHooks {
 		   If you’re familiar with Rodux, you already know how this works.
 		 */
 		useReducer<S = {}, A extends Action = AnyAction>(
-			reducer: RoactHooks.Reducer<S, A>,
+			reducer: Reducer<S, A>,
 			initialState: S
 		): LuaTuple<[S, (action: A) => void]>;
 	}
