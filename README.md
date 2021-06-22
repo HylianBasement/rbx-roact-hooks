@@ -1,7 +1,17 @@
 <div align="center"><img src="https://i.imgur.com/HkrF8kt.png"/></div>
 <h1 align="center">Roact-Hooks-TS</h1>
 <div align="center">
-	A typescript port of the <a href="https://github.com/Kampfkarren/roact-hooks">Roact-Hooks</a> module.
+	<a href="https://github.com/roblox-ts/roblox-ts">
+		<img src="https://img.shields.io/badge/github-roblox_typescript-red.svg" alt="roblox-ts"></img>
+	</a>
+	<a href="https://www.npmjs.com/package/@rbxts/roact-hooks">
+		<img src="https://badge.fury.io/js/%40rbxts%2Froact-hooks.svg"></img>
+	</a>
+</div>
+
+<div align="center">
+	A typescript port of the <a href="https://github.com/Kampfkarren/roact-hooks">Roact-Hooks</a> module. 
+	An implementation of <a href="https://reactjs.org/docs/hooks-intro.html">React hooks</a> for Roact.
 </div>
 
 ## Installation
