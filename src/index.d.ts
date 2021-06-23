@@ -70,6 +70,17 @@ declare namespace RoactHooks {
 	 */
 	export type InferFCProps<T> = T extends FC<infer P> ? P : never;
 	/**
+	 *  An empty props type
+	 */
+	export type NoProps = {
+		/** @hidden */
+		readonly _nominal_no_props: unique symbol
+	};
+	/**
+	 *  Make K properties in T optional
+	 */
+	export type Optional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+	/**
 	 *  Return type from [Roact.createContext](https://roblox.github.io/roact/api-reference/#roactcreatecontext).
 	 */
 	export type RoactContext<T> = {
@@ -94,29 +105,38 @@ declare namespace RoactHooks {
 	}
 }
 
-/**
- *  It is required you pass in the Roact you are using, since you can't combine multiple versions of Roact together.
- * 
- *  Returns a function that can be used to create a new Roact component with hooks.
- *  An optional dictionary can be passed in. The following are the valid keys that can be used, and what they do.
- *
- *  @param name
- *  Refers to the name used in debugging. If it is not passed, it'll use the function name of what was passed in.
- *  For instance, `Hooks.new(Roact)(Component)` will have the component name `"Component"`.
- *
- *  @param defaultProps
- *  Defines default values for props to ensure props will have values even if they were not specified by the parent component.
- */
-declare interface RoactHooks {
-	new (roact: typeof Roact): <F extends RoactHooks.FC<any>>(
-		render: F,
-		options?: {
-			name?: string,
-			defaultProps?: Partial<RoactHooks.InferFCProps<F>>
-		}
-	) => (props: RoactHooks.InferFCProps<F>) => Roact.Element;
+// The constructor
+declare namespace RoactHooks {
+	/**
+	 *  It is required you pass in the Roact you are using, since you can't combine multiple versions of Roact together.
+	 * 
+	 *  Returns a function that can be used to create a new Roact component with hooks.
+	 *  An optional dictionary can be passed in. The following are the valid keys that can be used, and what they do.
+	 *
+	 *  @param name
+	 *  Refers to the name used in debugging. If it is not passed, it'll use the function name of what was passed in.
+	 *  For instance, `Hooks.new(Roact)(Component)` will have the component name `"Component"`.
+	 *
+	 *  @param defaultProps
+	 *  Defines default values for props to ensure props will have values even if they were not specified by the parent component.
+	 */
+	export interface Hooks {
+		new (roact: typeof Roact): <F extends FC<any>, P = Partial<InferFCProps<F>>>(
+			render: F,
+			options?: {
+				name?: string,
+				defaultProps?: P
+			}
+		) => (
+			props: P extends NoProps 
+				? InferFCProps<F> 
+				: keyof P extends never 
+				? InferFCProps<F> 
+				: Optional<InferFCProps<F>, keyof P>
+		) => Roact.Element;
+	}
 }
 
-declare const RoactHooks: RoactHooks;
+declare const RoactHooks: RoactHooks.Hooks;
 
 export = RoactHooks;
