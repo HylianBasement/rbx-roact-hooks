@@ -17,7 +17,7 @@
 ## Installation
 The installation can be done via `npm i @rbxts/roact-hooks`.
 
-## Creating a hook
+## Intro to hooks
 For the constructor, you should pass in the Roact you are using, since can't combine multiple versions of Roact together.
 
 Returns a function that can be used to create a new Roact component with hooks. An optional object can be passed in. The following are the valid keys that can be used, and what they do.
@@ -30,7 +30,7 @@ Defines default values for props to ensure props will have values even if they w
 
 ### Example
 `ClickCounter.tsx`
-```ts
+```tsx
 import Roact from "@rbxts/roact";
 import Hooks from "@rbxts/roact-hooks";
 
@@ -53,7 +53,7 @@ export = new Hooks(Roact)(ClickCounter);
 
 ### Props & Default Props Example
 `PrintsOnClick.tsx`
-```ts
+```tsx
 import Roact from "@rbxts/roact";
 import Hooks from "@rbxts/roact-hooks";
 
@@ -88,7 +88,7 @@ export = new Hooks(Roact)(PrintsOnClick, {
 An alternative to `useState` that uses a reducer rather than state directly. If you’re familiar with Rodux, you already know how this works.
 
 `Stepper.tsx`
-```ts
+```tsx
 import Roact from "@rbxts/roact";
 import Hooks from "@rbxts/roact-hooks";
 
@@ -181,7 +181,81 @@ const Stepper: Hooks.FC = (_props, { useReducer }) => {
 export = new Hooks(Roact)(Stepper);
 ```
 
+## Creating a hook
+To create a custom hook all you need to do is to create a function, with its name starting with `use`.
+It may as well call other hooks.
+
+### Example
+`useFriendStatus.ts`
+```ts
+import { HookFunctions } from "@rbxts/roact-hooks";
+import ChatAPI, { Status } from "Server/ChatAPI";
+
+export = function(friendID: number, { useState, useEffect }: HookFunctions) {
+        const [isOnline, setIsOnline] = useState(false);
+
+        useEffect(() => {
+                const handleStatusChange = (status: Status) => {
+                        setIsOnline(status.isOnline);
+                }
+
+                ChatAPI.subscribeToFriendStatus(friendID, handleStatusChange);
+                return () => {
+                        ChatAPI.unsubscribeFromFriendStatus(friendID, handleStatusChange);
+                };
+        });
+
+        return isOnline;
+}
+```
+
+`FriendListItem.tsx`
+```tsx
+import Roact from "@rbxts/roact";
+import Hooks from "@rbxts/roact-hooks";
+
+import useFriendStatus from "./hooks/useFriendStatus.ts";
+import FriendListUser from "../FriendListUser.tsx";
+
+export interface FriendListItemProps {
+        name: string;
+        id: number;
+}
+
+const FriendListItem: Hooks.FC<FriendListItemProps> = (props, hooks) => {
+        const isOnline = useFriendStatus(props.id, hooks);
+
+        return (
+                <frame
+                        Key={props.name}
+                        Size={UDim2.fromOffset(320, 70)}
+                >
+                        <textlabel
+                                Key="Username"
+                                BackgroundTransparency={1}
+                                Size={new UDim2(1, -10, 1, 0)}
+                                Text={props.name}
+                                TextSize={14}
+                        />
+                        <frame
+                                Key="Status"
+                                BackgroundColor3={
+                                        isOnline 
+                                                ? Color3.fromRGB(0, 191, 3)
+                                                : Color3.fromRGB(100, 100, 100)
+                                }
+                                BorderSizePixel={0}
+                                Position={new UDim2(1, -10, 0, 0)}
+                                Size={new UDim2(0, 10, 1, 0)}
+                        />
+                </frame>
+        );
+}
+
+export = new Hooks(Roact)(FriendListItem)
+```
+
 To get more in depth on how this works, check the [original library's repository](https://github.com/Kampfkarren/roact-hooks#readme).
 
 ## License
-The original Roact-Hooks library's License can be found [here](https://github.com/Kampfkarren/roact-hooks/blob/main/LICENSE.md).
+This library is licensed under the [MPL-2.0 License](LICENSE.md). The original Roact-Hooks library's License can be found [here](https://github.com/Kampfkarren/roact-hooks/blob/main/LICENSE.md).
