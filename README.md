@@ -186,12 +186,15 @@ To create a custom hook all you need to do is to create a function, with its nam
 It may as well call other hooks.
 
 ### Example
-`useFriendStatus.ts`
+`hooks.ts`
 ```ts
 import { HookFunctions } from "@rbxts/roact-hooks";
 import ChatAPI, { Status } from "Server/ChatAPI";
 
-export = function(friendID: number, { useState, useEffect }: HookFunctions) {
+export const useFriendStatus = (
+        friendID: number,
+        { useState, useEffect }: HookFunctions
+) => {
         const [isOnline, setIsOnline] = useState(false);
 
         useEffect(() => {
@@ -206,7 +209,7 @@ export = function(friendID: number, { useState, useEffect }: HookFunctions) {
         });
 
         return isOnline;
-}
+};
 ```
 
 `FriendListItem.tsx`
@@ -214,7 +217,7 @@ export = function(friendID: number, { useState, useEffect }: HookFunctions) {
 import Roact from "@rbxts/roact";
 import Hooks from "@rbxts/roact-hooks";
 
-import useFriendStatus from "./hooks/useFriendStatus.ts";
+import { useFriendStatus } from "./hooks.ts";
 import FriendListUser from "../FriendListUser.tsx";
 
 export interface FriendListItemProps {
@@ -252,7 +255,7 @@ const FriendListItem: Hooks.FC<FriendListItemProps> = (props, hooks) => {
         );
 }
 
-export = new Hooks(Roact)(FriendListItem)
+export default new Hooks(Roact)(FriendListItem)
 ```
 
 To get more in depth on how this works, check the [original library's repository](https://github.com/Kampfkarren/roact-hooks#readme).
