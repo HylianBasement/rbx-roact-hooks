@@ -7,7 +7,11 @@ declare namespace RoactHooks {
 	 */
 	export interface HookFunctions {
 		/** Used to store a stateful value. Returns the current value, and a function that can be used to set the value. */
-		useState<T>(defaultValue: T): LuaTuple<[T, (newValue: T) => void]>;
+		useState<T>(defaultValue: T): LuaTuple<[T, (
+			newValue: T extends object
+				? T | ((currentValue: T) => T)
+				: T
+		) => void]>;
 		/**
 		 *  Used to perform a side-effect with a callback function.
 		 *
