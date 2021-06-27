@@ -125,7 +125,10 @@ declare namespace RoactHooks {
 	 *  Defines default values for props to ensure props will have values even if they were not specified by the parent component.
 	 */
 	export interface Hooks {
-		new (roact: typeof Roact): <F extends FC<any>, P = Partial<InferFCProps<F>>>(
+		new (roact: typeof Roact): <
+			F extends FC<any>,
+			P extends Partial<InferFCProps<F>> = Partial<InferFCProps<F>>
+		>(
 			render: F,
 			options?: {
 				name?: string,
