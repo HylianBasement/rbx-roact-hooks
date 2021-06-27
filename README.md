@@ -54,9 +54,6 @@ export = new Hooks(Roact)(ClickCounter);
 ### Props & Default Props Example
 `PrintsOnClick.tsx`
 ```tsx
-import Roact from "@rbxts/roact";
-import Hooks from "@rbxts/roact-hooks";
-
 interface Props {
 	buttonText: string;
 	printMessage: string;
@@ -89,9 +86,6 @@ An alternative to `useState` that uses a reducer rather than state directly. If 
 
 `Stepper.tsx`
 ```tsx
-import Roact from "@rbxts/roact";
-import Hooks from "@rbxts/roact-hooks";
-
 interface State {
 	count: number;
 }
@@ -188,7 +182,6 @@ It may as well call other hooks.
 ### Example
 `hooks.ts`
 ```ts
-import { HookFunctions } from "@rbxts/roact-hooks";
 import ChatAPI, { Status } from "Server/ChatAPI";
 
 export const useFriendStatus = (
@@ -214,11 +207,7 @@ export const useFriendStatus = (
 
 `FriendListItem.tsx`
 ```tsx
-import Roact from "@rbxts/roact";
-import Hooks from "@rbxts/roact-hooks";
-
 import { useFriendStatus } from "./hooks.ts";
-import FriendListUser from "../FriendListUser.tsx";
 
 export interface FriendListItemProps {
         name: string;
