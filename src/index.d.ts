@@ -64,7 +64,7 @@ declare namespace RoactHooks {
 	/**
 	 *  A Function Component
 	 */
-	export type FC<P = {}> = (props: P, hooks: HookFunctions) => Roact.Element | undefined;
+	export type FC<P = {}> = (props: Roact.PropsWithChildren<P>, hooks: HookFunctions) => Roact.Element;
 	/**
 	 *  A reducer
 	 */
