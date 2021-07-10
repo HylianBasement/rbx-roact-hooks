@@ -95,7 +95,9 @@ const enum Actions {
         DECREMENT = "decrement",
 }
 
-const initialState: State = { count: 0 };
+const initialState: State = {
+        count: 0,
+};
 
 const reducer: Hooks.Reducer<State, Hooks.Action<Actions>> = (state, action) => {
         switch(action.type) {
@@ -142,11 +144,11 @@ const Stepper: Hooks.FC = (_props, { useReducer }) => {
                                 Size={new UDim2(1, 0, 0, 38)}
                                 Text="Increment"
                                 TextColor3={new Color3(1, 1, 1)}
-                                TextScaled={true}
+                                TextScaled
                                 Event={{
                                         Activated: () => {
                                                 dispatch({
-                                                        type: Actions.INCREMENT
+                                                        type: Actions.INCREMENT,
                                                 })
                                         }
                                 }}
@@ -159,11 +161,11 @@ const Stepper: Hooks.FC = (_props, { useReducer }) => {
                                 Size={new UDim2(1, 0, 0, 38)}
                                 Text="Decrement"
                                 TextColor3={new Color3(1, 1, 1)}
-                                TextScaled={true}
+                                TextScaled
                                 Event={{
                                         Activated: () => {
                                                 dispatch({
-                                                        type: Actions.DECREMENT
+                                                        type: Actions.DECREMENT,
                                                 })
                                         }
                                 }}
