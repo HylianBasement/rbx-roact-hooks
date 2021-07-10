@@ -34,6 +34,6 @@
   },
   "files": [
     "src/*",
-    "*.d.ts"
+    "!test.tsx"
   ]
 }
