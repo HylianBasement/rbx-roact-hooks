@@ -1,17 +1,13 @@
 import Roact from '@rbxts/roact';
 
-// Hook Functions
+// Core Hooks
 declare namespace RoactHooks {
 	/**
-	 *  Library's hook functions
+	 *  Library's built-in hooks
 	 */
-	export interface HookFunctions {
+	export interface CoreHooks {
 		/** Used to store a stateful value. Returns the current value, and a function that can be used to set the value. */
-		useState<T>(defaultValue: T): LuaTuple<[T, (
-			newValue: T extends object
-				? T | ((currentValue: T) => T)
-				: T
-		) => void]>;
+		useState<T>(defaultValue: T): LuaTuple<[T, Dispatch<BasicStateAction<T>>]>;
 		/**
 		 *  Used to perform a side-effect with a callback function.
 		 *
@@ -25,13 +21,13 @@ declare namespace RoactHooks {
 		/** 
 		 *  Similar to [useRef in React](https://reactjs.org/docs/hooks-reference.html#useref).
 		    Creates a table that you can mutate without re-rendering the component every time.
-		    Think of it like a class variable (`self.something = 1` vs. `self:setState({ something = 1 })`).
+		    Think of it like a class variable (`this.something = 1` vs. `this.setState({ something: 1 })`).
 		 */
 		useValue<T>(value: T): { value: T };
 		/**
 		 *  Returns a [memoized](https://en.wikipedia.org/wiki/Memoization) callback.
 		 *
-		 *  `useCallback(callback, dependencies)` is equivalent to `useMemo(function() return callback end, dependencies)`.
+		 *  `useCallback(callback, dependencies)` is equivalent to `useMemo(() => callback, dependencies)`.
 		 */
 		useCallback<F extends (...args: any[]) => any>(callback: F, dependencies?: any[]): F;
 		/**
@@ -55,22 +51,33 @@ declare namespace RoactHooks {
 		useReducer<S = {}, A extends Action = AnyAction>(
 			reducer: Reducer<S, A>,
 			initialState: S
-		): LuaTuple<[S, (action: A) => void]>;
+		): LuaTuple<[S, Dispatch<A>]>;
 	}
 }
 
 // Utility Types
 declare namespace RoactHooks {
 	/**
+	 *  A basic state action.
+	 *  Returns its state type or a callback that returns it, using the same as the parameter type.
+	 * 
+	 *  Used in `useState`
+	 */
+	export type BasicStateAction<S> = S | ((currentValue: S) => S);
+	/**
+	 *  Generic type for dispatching state actions
+	 */
+	export type Dispatch<A> = (action: A) => void;
+	/**
 	 *  A Function Component
 	 */
-	export type FC<P = {}> = (props: Roact.PropsWithChildren<P>, hooks: HookFunctions) => Roact.Element;
+	export type FC<P = {}> = (props: Roact.PropsWithChildren<P>, hooks: CoreHooks) => Roact.Element;
 	/**
 	 *  A reducer
 	 */
 	export type Reducer<S = {}, A extends Action = AnyAction> = (state: S, action: A) => S;
 	/**
-	 *  Extracts the props type from a Function Component.
+	 *  Extracts the props type from a Function Component
 	 */
 	export type InferFCProps<T> = T extends FC<infer P> ? P : never;
 	/**
@@ -78,7 +85,7 @@ declare namespace RoactHooks {
 	 */
 	export type NoProps = {
 		/** @hidden */
-		readonly _nominal_no_props: unique symbol
+		readonly _nominal_NoProps: unique symbol;
 	};
 	/**
 	 *  Make K properties in T optional
@@ -109,7 +116,7 @@ declare namespace RoactHooks {
 	}
 }
 
-// The constructor
+// Constructor
 declare namespace RoactHooks {
 	/**
 	 *  It is required you pass in the Roact you are using, since you can't combine multiple versions of Roact together.
@@ -119,7 +126,7 @@ declare namespace RoactHooks {
 	 *
 	 *  @param name
 	 *  Refers to the name used in debugging. If it is not passed, it'll use the function name of what was passed in.
-	 *  For instance, `Hooks.new(Roact)(Component)` will have the component name `"Component"`.
+	 *  For instance, `new Hooks(Roact)(Component)` will have the component name `"Component"`.
 	 *
 	 *  @param defaultProps
 	 *  Defines default values for props to ensure props will have values even if they were not specified by the parent component.
@@ -142,6 +149,12 @@ declare namespace RoactHooks {
 				: Optional<InferFCProps<F>, keyof P>
 		) => Roact.Element;
 	}
+}
+
+// Deprecated
+declare namespace RoactHooks {
+	/** @deprecated Use `CoreHooks` instead. */
+	export type HookFunctions = RoactHooks.CoreHooks;
 }
 
 declare const RoactHooks: RoactHooks.Hooks;

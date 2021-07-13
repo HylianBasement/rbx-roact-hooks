@@ -188,7 +188,7 @@ import ChatAPI, { Status } from "Server/ChatAPI";
 
 export const useFriendStatus = (
         friendID: number,
-        { useState, useEffect }: HookFunctions
+        { useState, useEffect }: CoreHooks
 ) => {
         const [isOnline, setIsOnline] = useState(false);
 
