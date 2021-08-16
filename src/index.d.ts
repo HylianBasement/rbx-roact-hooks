@@ -1,4 +1,4 @@
-import Roact from '@rbxts/roact';
+import Roact from "@rbxts/roact";
 
 // Core Hooks
 declare namespace RoactHooks {
@@ -48,7 +48,7 @@ declare namespace RoactHooks {
 		 * An alternative to `useState` that uses a reducer rather than state directly.
 		   If you’re familiar with Rodux, you already know how this works.
 		 */
-		useReducer<S = {}, A extends Action = AnyAction>(
+		useReducer<S = {}, A extends Action = Action>(
 			reducer: Reducer<S, A>,
 			initialState: S
 		): LuaTuple<[S, Dispatch<A>]>;
@@ -75,7 +75,7 @@ declare namespace RoactHooks {
 	/**
 	 *  A reducer
 	 */
-	export type Reducer<S = {}, A extends Action = AnyAction> = (state: S, action: A) => S;
+	export type Reducer<S = {}, A extends Action = Action> = (state: S, action: A) => S;
 	/**
 	 *  Extracts the props type from a Function Component
 	 */
@@ -108,12 +108,6 @@ declare namespace RoactHooks {
 	export interface Action<T = string> {
 		type: T;
 	}
-	/**
-	 *  Any action
-	 */
-	export interface AnyAction extends Action {
-		[extraProps: string]: unknown;
-	}
 }
 
 // Constructor
@@ -144,9 +138,11 @@ declare namespace RoactHooks {
 		) => (
 			props: P extends NoProps 
 				? InferFCProps<F> 
-				: keyof P extends never 
+				: P extends defined
+				? keyof P extends never 
 				? InferFCProps<F> 
 				: Optional<InferFCProps<F>, keyof P>
+				: InferFCProps<F>
 		) => Roact.Element;
 	}
 }
