@@ -7,9 +7,7 @@ declare namespace RoactHooks {
 	 */
 	export interface CoreHooks {
 		/** Used to store a stateful value. Returns the current value, and a function that can be used to set the value. */
-		useState<T, U = T extends (state: infer S) => unknown ? S : T>(
-			defaultValue: T
-		): LuaTuple<[U, Dispatch<BasicStateAction<U>>]>;
+		useState<T>(defaultValue: BasicStateAction<T>): LuaTuple<[T, Dispatch<BasicStateAction<T>>]>;
 		/**
 		 *  Used to perform a side-effect with a callback function.
 		 *
@@ -47,8 +45,8 @@ declare namespace RoactHooks {
 		 */
 		useBinding<T>(defaultValue: T): LuaTuple<[Roact.Binding<T>, (newValue: T) => void]>;
 		/**
-		 * An alternative to `useState` that uses a reducer rather than state directly.
-		   If you’re familiar with Rodux, you already know how this works.
+		 *  An alternative to `useState` that uses a reducer rather than state directly.
+		    If you’re familiar with Rodux, you already know how this works.
 		 */
 		useReducer<S = {}, A extends Action = Action>(
 			reducer: Reducer<S, A>,
@@ -60,11 +58,11 @@ declare namespace RoactHooks {
 // Utility Types
 declare namespace RoactHooks {
 	/**
-	 * Type of the component
+	 *  Type of the component
 	 */
 	export type ComponentType =
 		| "Component"
-		| "PureComponent"
+		| "PureComponent";
 	/**
 	 *  A basic state action.
 	 *  Returns its state type or a callback that returns it, using the same as the parameter type.
@@ -102,14 +100,14 @@ declare namespace RoactHooks {
 	/**
 	 *  Return type from [Roact.createContext](https://roblox.github.io/roact/api-reference/#roactcreatecontext).
 	 */
-	export type RoactContext<T> = {
+	export interface RoactContext<T> {
 		Provider: Roact.ComponentConstructor<{
 			value: T;
 		}>;
 		Consumer: Roact.ComponentConstructor<{
 			render: (value: T) => Roact.Element | undefined;
 		}>;
-	};
+	}
 	/**
 	 *  An action type for reducers
 	 */
@@ -137,21 +135,21 @@ declare namespace RoactHooks {
 				 *  Refers to the name used in debugging. If it is not passed, it'll use the function name of what was passed in.
 	 			 *  For instance, `new Hooks(Roact)(Component)` will have the component name `"Component"`.
 				 */
-				name: string,
+				name: string;
 				/**
 				 *  Defines default values for props to ensure props will have values even if they were not specified by the parent component.
 				 */
-				defaultProps: P,
+				defaultProps: P;
 				/**
 				 *  Defines if the component will be either a `Component` or a `PureComponent`.
 				 * 
 				 *  See [Component Types](https://roblox.github.io/roact/api-reference/#component-types) for reference.
 				 */
-				componentType: ComponentType,
+				componentType: ComponentType;
 				/**
 				 *  Provides a mechanism for verifying inputs passed into the component.
 				 */
-				validateProps: (props: P) => LuaTuple<[boolean, string?]>
+				validateProps: (props: P) => LuaTuple<[boolean, string?]>;
 			}>
 		) => (
 			props: P extends NoProps 
