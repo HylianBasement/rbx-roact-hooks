@@ -23,7 +23,7 @@ declare namespace RoactHooks {
 		    Creates a table that you can mutate without re-rendering the component every time.
 		    Think of it like a class variable (`this.something = 1` vs. `this.setState({ something: 1 })`).
 		 */
-		useValue<T>(value: T): { value: T };
+		useValue<T>(value?: T): { value: T };
 		/**
 		 *  Returns a [memoized](https://en.wikipedia.org/wiki/Memoization) callback.
 		 *
