@@ -7,7 +7,9 @@ declare namespace RoactHooks {
 	 */
 	export interface CoreHooks {
 		/** Used to store a stateful value. Returns the current value, and a function that can be used to set the value. */
-		useState<T>(defaultValue: T): LuaTuple<[T, Dispatch<BasicStateAction<T>>]>;
+		useState<T, U = T extends (state: infer S) => unknown ? S : T>(
+			defaultValue: T
+		): LuaTuple<[U, Dispatch<BasicStateAction<U>>]>;
 		/**
 		 *  Used to perform a side-effect with a callback function.
 		 *
@@ -57,6 +59,12 @@ declare namespace RoactHooks {
 
 // Utility Types
 declare namespace RoactHooks {
+	/**
+	 * Type of the component
+	 */
+	export type ComponentType =
+		| "Component"
+		| "PureComponent"
 	/**
 	 *  A basic state action.
 	 *  Returns its state type or a callback that returns it, using the same as the parameter type.
@@ -112,29 +120,39 @@ declare namespace RoactHooks {
 
 // Constructor
 declare namespace RoactHooks {
-	/**
-	 *  It is required you pass in the Roact you are using, since you can't combine multiple versions of Roact together.
-	 * 
-	 *  Returns a function that can be used to create a new Roact component with hooks.
-	 *  An optional dictionary can be passed in. The following are the valid keys that can be used, and what they do.
-	 *
-	 *  @param name
-	 *  Refers to the name used in debugging. If it is not passed, it'll use the function name of what was passed in.
-	 *  For instance, `new Hooks(Roact)(Component)` will have the component name `"Component"`.
-	 *
-	 *  @param defaultProps
-	 *  Defines default values for props to ensure props will have values even if they were not specified by the parent component.
-	 */
 	export interface Hooks {
+		/**
+		 *  It is required you pass in the Roact you are using, since you can't combine multiple versions of Roact together.
+		 * 
+		 *  Returns a function that can be used to create a new Roact component with hooks.
+		 *  An optional dictionary can be passed in. The following are the valid keys that can be used, and what they do.
+		 */
 		new (roact: typeof Roact): <
 			F extends FC<any>,
-			P extends Partial<InferFCProps<F>> = Partial<InferFCProps<F>>
+			P = Partial<InferFCProps<F>>
 		>(
 			render: F,
-			options?: {
-				name?: string,
-				defaultProps?: P
-			}
+			options?: Partial<{
+				/**
+				 *  Refers to the name used in debugging. If it is not passed, it'll use the function name of what was passed in.
+	 			 *  For instance, `new Hooks(Roact)(Component)` will have the component name `"Component"`.
+				 */
+				name: string,
+				/**
+				 *  Defines default values for props to ensure props will have values even if they were not specified by the parent component.
+				 */
+				defaultProps: P,
+				/**
+				 *  Defines if the component will be either a `Component` or a `PureComponent`.
+				 * 
+				 *  See [Component Types](https://roblox.github.io/roact/api-reference/#component-types) for reference.
+				 */
+				componentType: ComponentType,
+				/**
+				 *  Provides a mechanism for verifying inputs passed into the component.
+				 */
+				validateProps: (props: P) => LuaTuple<[boolean, string?]>
+			}>
 		) => (
 			props: P extends NoProps 
 				? InferFCProps<F> 
