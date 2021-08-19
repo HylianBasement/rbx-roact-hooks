@@ -6,11 +6,11 @@
                         "import Roact from \"@rbxts/roact\";",
                         "import Hooks from \"@rbxts/roact-hooks\";",
                         "",
-                        "const ${1:TM_FILENAME_BASE}: Hooks.FC = (_, {}) => {",
+                        "const ${1:${TM_FILENAME_BASE}}: Hooks.FC = (_, {}) => {",
                         "\treturn <></>;",
                         "}",
                         "",
-                        "export = new Hooks(Roact)(${1:TM_FILENAME_BASE});"
+                        "export = new Hooks(Roact)(${1:${TM_FILENAME_BASE}});"
                 ]
         },
         "Functional Component with Props": {
@@ -22,11 +22,11 @@
                         "",
                         "interface ${TM_FILENAME_BASE}Props {}",
                         "",
-                        "const ${1:TM_FILENAME_BASE}: Hooks.FC<${TM_FILENAME_BASE}Props> = (props, {}) => {",
+                        "const ${1:${TM_FILENAME_BASE}}: Hooks.FC<${TM_FILENAME_BASE}Props> = (props, {}) => {",
                         "\treturn <></>;",
                         "}",
                         "",
-                        "export = new Hooks(Roact)(${1:TM_FILENAME_BASE});"
+                        "export = new Hooks(Roact)(${1:${TM_FILENAME_BASE}});"
                 ]
         }
 }
