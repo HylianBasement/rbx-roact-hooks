@@ -246,7 +246,7 @@ const FriendListItem: Hooks.FC<FriendListItemProps> = (props, hooks) => {
         );
 }
 
-export default new Hooks(Roact)(FriendListItem)
+export default new Hooks(Roact)(FriendListItem);
 ```
 
 To get more in depth on how this works, check the [original library's repository](https://github.com/Kampfkarren/roact-hooks#readme).
