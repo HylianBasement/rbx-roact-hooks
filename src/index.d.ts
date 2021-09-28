@@ -7,7 +7,7 @@ declare namespace RoactHooks {
 	 */
 	export interface CoreHooks {
 		/** Used to store a stateful value. Returns the current value, and a function that can be used to set the value. */
-		useState<T>(defaultValue: BasicStateAction<T>): LuaTuple<[T, Dispatch<T | (() => T)>]>;
+		useState<T>(defaultValue: BasicStateAction<T>): LuaTuple<[T, Dispatch<BasicStateAction<T>>]>;
 		/**
 		 *  Used to perform a side-effect with a callback function.
 		 *
