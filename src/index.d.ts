@@ -23,7 +23,7 @@ declare namespace RoactHooks {
 		    Creates a table that you can mutate without re-rendering the component every time.
 		    Think of it like a class variable (`this.something = 1` vs. `this.setState({ something: 1 })`).
 		 */
-		useValue<T>(value?: T): { value: T };
+		useValue<T>(value?: T): MutableValueObject<T>;
 		/**
 		 *  Returns a [memoized](https://en.wikipedia.org/wiki/Memoization) callback.
 		 *
@@ -63,6 +63,14 @@ declare namespace RoactHooks {
 	export type ComponentType =
 		| "Component"
 		| "PureComponent";
+	/**
+	 *  A utility type for mutable tables.
+	 * 
+	 *  Used in `useValue`
+	 */
+	export interface MutableValueObject<T> {
+		value: T;
+	}
 	/**
 	 *  A basic state action.
 	 *  Returns its state type or a callback that returns it, using the same as the parameter type.
