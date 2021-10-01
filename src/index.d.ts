@@ -127,7 +127,7 @@ declare namespace RoactHooks {
 		 */
 		new (roact: typeof Roact): <
 			F extends FC<any>,
-			P = Partial<InferFCProps<F>>
+			P extends Partial<InferFCProps<F>> | undefined
 		>(
 			render: F,
 			options?: Partial<{
@@ -149,15 +149,15 @@ declare namespace RoactHooks {
 				/**
 				 *  Provides a mechanism for verifying inputs passed into the component.
 				 */
-				validateProps: (props: P) => LuaTuple<[boolean, string?]>;
+				validateProps: (props: InferFCProps<F>) => LuaTuple<[boolean, string?]>;
 			}>
 		) => (
-			props: P extends NoProps 
-				? InferFCProps<F> 
-				: P extends defined
-				? keyof P extends never 
-				? InferFCProps<F> 
-				: Optional<InferFCProps<F>, keyof P>
+			props: keyof P extends never
+				? InferFCProps<F>
+				: P extends undefined
+				? InferFCProps<F>
+				: keyof P extends defined
+				? Optional<InferFCProps<F>, keyof P>
 				: InferFCProps<F>
 		) => Roact.Element;
 	}
