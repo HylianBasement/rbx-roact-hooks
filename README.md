@@ -14,8 +14,11 @@
 	An implementation of <a href="https://reactjs.org/docs/hooks-intro.html">React hooks</a> for Roact.
 </div>
 
-## Installation
-The installation can be done via `npm i @rbxts/roact-hooks`.
+<br/>
+<div align="center">
+        <pre>npm i <a href="https://www.npmjs.com/package/@rbxts/roact-hooks">@rbxts/roact-hooks</a></pre>
+</div>
+<br/>
 
 ## Intro to hooks
 For the constructor, you should pass in the Roact you are using, since can't combine multiple versions of Roact together.
