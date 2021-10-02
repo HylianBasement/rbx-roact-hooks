@@ -28,6 +28,12 @@ Refers to the name used in debugging. If it is not passed, it'll use the functio
 #### defaultProps
 Defines default values for props to ensure props will have values even if they were not specified by the parent component.
 
+#### componentType
+Defines if the component will be either a `Component` or a `PureComponent`.
+
+#### validateProps
+Provides a mechanism for verifying inputs passed into the component.
+
 ### Example
 `ClickCounter.tsx`
 ```tsx
