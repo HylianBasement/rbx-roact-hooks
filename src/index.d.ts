@@ -64,14 +64,6 @@ declare namespace RoactHooks {
 		| "Component"
 		| "PureComponent";
 	/**
-	 *  A utility type for mutable tables.
-	 * 
-	 *  Used in `useValue`
-	 */
-	export interface MutableValueObject<T> {
-		value: T;
-	}
-	/**
 	 *  A basic state action.
 	 *  Returns its state type or a callback that returns it, using the same as the parameter type.
 	 * 
@@ -105,6 +97,18 @@ declare namespace RoactHooks {
 	 *  Make K properties in T optional
 	 */
 	export type Optional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+	/**
+	 *  A utility type to provide an error message for props validation
+	 */
+	export type PropsValidationWithMessage = LuaTuple<[boolean, string]>;
+	/**
+	 *  A utility type for mutable tables.
+	 * 
+	 *  Used in `useValue`
+	 */
+	export interface MutableValueObject<T> {
+		value: T;
+	}
 	/**
 	 *  Return type from [Roact.createContext](https://roblox.github.io/roact/api-reference/#roactcreatecontext).
 	 */
@@ -157,7 +161,7 @@ declare namespace RoactHooks {
 				/**
 				 *  Provides a mechanism for verifying inputs passed into the component.
 				 */
-				validateProps: (props: InferFCProps<F>) => LuaTuple<[boolean, string?]>;
+				validateProps: (props: InferFCProps<F>) => boolean | PropsValidationWithMessage;
 			}>
 		) => (
 			props: keyof P extends never
