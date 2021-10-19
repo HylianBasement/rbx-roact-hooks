@@ -139,7 +139,7 @@ declare namespace RoactHooks {
 		 */
 		new (roact: typeof Roact): <
 			F extends FC<any>,
-			P extends Partial<InferFCProps<F>> | undefined
+			P extends Partial<InferFCProps<F>> | NoProps = NoProps
 		>(
 			render: F,
 			options?: Partial<{
