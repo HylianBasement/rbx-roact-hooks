@@ -204,6 +204,6 @@ declare namespace RoactHooks {
 	export type HookFunctions = RoactHooks.CoreHooks;
 }
 
-declare const RoactHooks: RoactHooks.Hooks;
+// declare const RoactHooks: RoactHooks.Hooks;
 
 export = RoactHooks;
