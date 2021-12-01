@@ -68,9 +68,10 @@ declare namespace RoactHooks {
 			initialState: S
 		): LuaTuple<[S, Dispatch<A>]>;
 	}
+}
 
-	// Utility Types
-
+// Utility Types
+declare namespace RoactHooks {
 	/**
 	 *  Type of the component
 	 */
@@ -144,27 +145,19 @@ declare namespace RoactHooks {
 	export interface Action<T = string> {
 		type: T;
 	}
+}
 
-	// Hooked component
-	export interface HookedComponent<
-		F extends FC<any>,
-		P extends Partial<InferFCProps<F>> | NoProps = NoProps
-	> extends Roact.Component {
-		defaultProps: P;
-		runEffects: () => void;
-		render: () => ReturnType<F>;
+// Hooked component
+declare namespace RoactHooks {
+	export interface ComponentConstructorWithHooks<P = {}>
+		extends Roact.ComponentConstructor<P> {
+		defaultProps?: Partial<P>;
+		validateProps?: (props: P) => boolean | PropsValidationWithMessage;
 	}
+}
 
-	export interface HookedPureComponent<
-		F extends FC<any>,
-		P extends Partial<InferFCProps<F>> | NoProps = NoProps
-	> extends Roact.PureComponent {
-		defaultProps: P;
-		runEffects: () => void;
-		render: () => ReturnType<F>;
-	}
-
-	// Constructor
+// Constructor
+declare namespace RoactHooks {
 	export interface Hooks {
 		/**
 		 *  It is required you pass in the Roact you are using, since you can't combine multiple versions of Roact together.
@@ -200,10 +193,20 @@ declare namespace RoactHooks {
 					props: InferFCProps<F>
 				) => boolean | PropsValidationWithMessage;
 			}>
-		) => HookedComponent<F, P> | HookedPureComponent<F, P>;
+		) => ComponentConstructorWithHooks<
+			keyof P extends never
+				? InferFCProps<F>
+				: P extends undefined
+				? InferFCProps<F>
+				: keyof P extends defined
+				? Optional<InferFCProps<F>, keyof P>
+				: InferFCProps<F>
+		>;
 	}
+}
 
-	// Deprecated
+// Deprecated
+declare namespace RoactHooks {
 	/** @deprecated Use `CoreHooks` instead. */
 	export type HookFunctions = RoactHooks.CoreHooks;
 }
