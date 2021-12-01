@@ -146,7 +146,7 @@ declare namespace RoactHooks {
 	}
 
 	// Hooked component
-	export class HookedComponent<
+	export interface HookedComponent<
 		F extends FC<any>,
 		P extends Partial<InferFCProps<F>> | NoProps = NoProps
 	> extends Roact.Component {
@@ -155,10 +155,14 @@ declare namespace RoactHooks {
 		render: () => ReturnType<F>;
 	}
 
-	export class HookedPureComponent<
+	export interface HookedPureComponent<
 		F extends FC<any>,
 		P extends Partial<InferFCProps<F>> | NoProps = NoProps
-	> extends HookedComponent<F, P> {}
+	> extends Roact.PureComponent {
+		defaultProps: P;
+		runEffects: () => void;
+		render: () => ReturnType<F>;
+	}
 
 	// Constructor
 	export interface Hooks {
@@ -204,6 +208,6 @@ declare namespace RoactHooks {
 	export type HookFunctions = RoactHooks.CoreHooks;
 }
 
-// declare const RoactHooks: RoactHooks.Hooks;
+declare const RoactHooks: RoactHooks.Hooks;
 
 export = RoactHooks;
