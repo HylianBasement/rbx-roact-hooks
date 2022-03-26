@@ -29,7 +29,7 @@
   "homepage": "https://github.com/HylianBasement/rbx-roact-hooks#readme",
   "devDependencies": {
     "@rbxts/compiler-types": "^1.3.3-types.0",
-    "@rbxts/roact": "^1.4.0-ts.0",
+    "@rbxts/roact": "^1.4.0-ts.2",
     "@rbxts/types": "^1.0.571"
   },
   "files": [
