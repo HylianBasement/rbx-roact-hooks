@@ -1,6 +1,6 @@
 {
   "name": "@rbxts/roact-hooks",
-  "version": "0.3.0-ts.2",
+  "version": "0.3.0-ts.3",
   "description": "Typings for Kampfkarren's roact-hooks module",
   "scripts": {},
   "keywords": [
@@ -28,9 +28,9 @@
   },
   "homepage": "https://github.com/HylianBasement/rbx-roact-hooks#readme",
   "devDependencies": {
-    "@rbxts/compiler-types": "^1.1.1-types.3",
+    "@rbxts/compiler-types": "^1.3.3-types.0",
     "@rbxts/roact": "^1.4.0-ts.0",
-    "@rbxts/types": "^1.0.495"
+    "@rbxts/types": "^1.0.571"
   },
   "files": [
     "src/*",

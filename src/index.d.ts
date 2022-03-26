@@ -7,7 +7,7 @@ declare namespace RoactHooks {
 	 */
 	export interface CoreHooks {
 		/** Used to store a stateful value. Returns the current value, and a function that can be used to set the value. */
-		useState<T>(defaultValue: BasicStateAction<T>): LuaTuple<[T, Dispatch<BasicStateAction<T>>]>;
+		useState: <T>(defaultValue: BasicStateAction<T>) => LuaTuple<[T, Dispatch<BasicStateAction<T>>]>;
 		/**
 		 *  Used to perform a side-effect with a callback function.
 		 *
@@ -15,21 +15,21 @@ declare namespace RoactHooks {
 		 *
 		 *  You can also pass in a list of dependencies to `useEffect`. If passed, then only when those dependencies change will the callback function be re-ran.
 		 */
-		useEffect(callback: () => (() => void) | void, dependencies?: any[]): void;
+		useEffect: (callback: () => (() => void) | void, dependencies?: any[]) => void;
 		/** Returns the value of the [context](https://roblox.github.io/roact/advanced/context/). */
-		useContext<T>(context: RoactContext<T>): T;
+		useContext: <T>(context: RoactContext<T>) => T;
 		/** 
 		 *  Similar to [useRef in React](https://reactjs.org/docs/hooks-reference.html#useref).
 		    Creates a table that you can mutate without re-rendering the component every time.
 		    Think of it like a class variable (`this.something = 1` vs. `this.setState({ something: 1 })`).
 		 */
-		useValue<T>(value?: T): MutableValueObject<T>;
+		useValue: <T>(value?: T) => MutableValueObject<T>;
 		/**
 		 *  Returns a [memoized](https://en.wikipedia.org/wiki/Memoization) callback.
 		 *
 		 *  `useCallback(callback, dependencies)` is equivalent to `useMemo(() => callback, dependencies)`.
 		 */
-		useCallback<F extends (...args: any[]) => any>(callback: F, dependencies?: any[]): F;
+		useCallback: <F extends (...args: any[]) => any>(callback: F, dependencies?: any[]) => F;
 		/**
 		 *  Returns a [memoized](https://en.wikipedia.org/wiki/Memoization) value.
 		 *
@@ -37,21 +37,21 @@ declare namespace RoactHooks {
 		 *
 		 *  The function passed to `useMemo` runs during rendering, so don't perform any side effects.
 		 */
-		useMemo<T>(createValue: () => T, dependencies?: any[]): T;
+		useMemo: <T>(createValue: () => T, dependencies?: any[]) => T;
 		/**
 		 *  Returns a [memoized](https://en.wikipedia.org/wiki/Memoization) [binding](https://roblox.github.io/roact/advanced/bindings-and-refs/#bindings).
 		 *
 		 *  These can then be used just like normal bindings in Roact.
 		 */
-		useBinding<T>(defaultValue: T): LuaTuple<[Roact.Binding<T>, (newValue: T) => void]>;
+		useBinding: <T>(defaultValue: T) => LuaTuple<[Roact.Binding<T>, (newValue: T) => void]>;
 		/**
 		 *  An alternative to `useState` that uses a reducer rather than state directly.
 		    If you’re familiar with Rodux, you already know how this works.
 		 */
-		useReducer<S = {}, A extends Action = Action>(
+		useReducer: <S = {}, A extends Action = Action>(
 			reducer: Reducer<S, A>,
 			initialState: S
-		): LuaTuple<[S, Dispatch<A>]>;
+		) => LuaTuple<[S, Dispatch<A>]>;
 	}
 }
 
@@ -139,7 +139,7 @@ declare namespace RoactHooks {
 		 */
 		new (roact: typeof Roact): <
 			F extends FC<any>,
-			P extends Partial<InferFCProps<F>> | NoProps = NoProps
+			P extends Partial<InferFCProps<F>> | undefined
 		>(
 			render: F,
 			options?: Partial<{
