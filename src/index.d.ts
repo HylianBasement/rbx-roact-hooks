@@ -7,7 +7,7 @@ declare namespace RoactHooks {
 	 */
 	export interface CoreHooks {
 		/** Used to store a stateful value. Returns the current value, and a function that can be used to set the value. */
-		useState: <T>(defaultValue: BasicStateAction<T>) => LuaTuple<[T, Dispatch<BasicStateAction<T>>]>;
+		useState: <T>(defaultValue: BasicStateAction<T>) => LuaTuple<[Readonly<T>, Dispatch<BasicStateAction<T>>]>;
 		/**
 		 *  Used to perform a side-effect with a callback function.
 		 *
@@ -52,6 +52,10 @@ declare namespace RoactHooks {
 			reducer: Reducer<S, A>,
 			initialState: S
 		) => LuaTuple<[S, Dispatch<A>]>;
+		/**
+		 * The roact version the library uses. This is useful if custom hooks need direct access to Roact.
+		 */
+		Roact: typeof Roact;
 	}
 }
 
@@ -77,7 +81,7 @@ declare namespace RoactHooks {
 	/**
 	 *  A Function Component
 	 */
-	export type FC<P = {}> = (props: Roact.PropsWithChildren<P>, hooks: CoreHooks) => Roact.Element;
+	export type FC<P = {}> = (props: Roact.PropsWithChildren<Readonly<P>>, hooks: CoreHooks) => Roact.Element;
 	/**
 	 *  A reducer
 	 */
@@ -100,7 +104,7 @@ declare namespace RoactHooks {
 	/**
 	 *  A utility type to provide an error message for props validation
 	 */
-	export type PropsValidationWithMessage = LuaTuple<[boolean, string]>;
+	export type PropsValidationWithMessage = LuaTuple<[false, string]> | LuaTuple<[true, never]>;
 	/**
 	 *  A utility type for mutable tables.
 	 * 
