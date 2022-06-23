@@ -25,16 +25,13 @@ For the constructor, you should pass in the Roact you are using, since can't com
 
 Returns a function that can be used to create a new Roact component with hooks. An optional object can be passed in. The following are the valid keys that can be used, and what they do.
 
-#### name
+#### `name`
 Refers to the name used in debugging. If it is not passed, it'll use the function name of what was passed in.
 
-#### defaultProps
-Defines default values for props to ensure props will have values even if they were not specified by the parent component.
-
-#### componentType
+#### `componentType`
 Defines if the component will be either a `Component` or a `PureComponent`.
 
-#### validateProps
+#### `validateProps`
 Provides a mechanism for verifying inputs passed into the component.
 
 ### Example
@@ -259,6 +256,49 @@ export default new Hooks(Roact)(FriendListItem);
 ```
 
 To get more in depth on how this works, check the [original library's repository](https://github.com/Kampfkarren/roact-hooks#readme).
+
+## Extra
+### Using a default property
+The `defaultProps` property is intentionally excluded from the `Hooks` class because TypeScript already have a shorthand syntax for assigning default properties. This can be achieved by destructuring your `props` object and using `=` to assign a default value to the chosen property.
+
+```tsx
+interface Props {
+        hello: string;
+        world?: string;
+}
+
+const HelloWorld: Hooks.FC<Props> = (({ hello, world = ", World!" }, hooks) => {
+        return <textlabel Text={hello + world} />
+});
+
+export = new Hooks(Roact)(HelloWorld);
+
+<HelloWorld hello="Hello" /> // Text will be "Hello, World!"
+```
+
+### Re-using a hooked component factory
+The `Hooks` class doesn't necessarily need to be created for each new component, instead it can be stored in a variable and exported to be used by the components.
+
+```js
+export const hooks = new Hooks(Roact);
+```
+
+```tsx
+// Some of the ViewportFrame props
+interface ComponentProps {
+        ImageTransparency?: number;
+        LightDirection?: Vector3;
+}
+
+export const Viewport = hooks((props: ComponentProps, hooks) => {
+        return <viewportframe {...props} />;
+});
+
+// Or:
+export const Viewport2 = hooks<ComponentProps>((props, hooks) => {
+	return <viewportframe {...props} />;
+});
+```
 
 ## License
 This library is licensed under the [MPL-2.0 License](LICENSE.md). The original Roact-Hooks library's License can be found [here](https://github.com/Kampfkarren/roact-hooks/blob/main/LICENSE.md).
