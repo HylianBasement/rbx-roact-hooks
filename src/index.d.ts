@@ -186,7 +186,7 @@ declare namespace RoactHooks {
 			}
 		) => (
 			props: P
-		) => Roact.Element;
+		) => Roact.Element | undefined;
 	}
 }
 
