@@ -45,7 +45,7 @@ declare namespace RoactHooks {
 		 *  @param callback The memoized callback.
 		 *  @param dependencies The dependencies.
 		 */
-		useCallback: <F extends (...args: any[]) => any>(callback: F, dependencies?: any[]) => F;
+		useCallback: <F extends (...args: any[]) => any>(callback: F, dependencies: any[]) => F;
 		/**
 		 *  Returns a [memoized](https://en.wikipedia.org/wiki/Memoization) value.
 		 *
