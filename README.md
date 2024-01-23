@@ -1,5 +1,6 @@
 <div align="center"><img src="https://i.imgur.com/HkrF8kt.png"/></div>
 <h1 align="center">Roact-Hooks-TS</h1>
+<div align="center"><blockquote>THIS REPOSITORY HAS BEEN DEPRECATED IN FAVOR OF REACT-LUA</blockquote></div>
 <div align="center">
 	<a href="https://github.com/roblox-ts/roblox-ts">
 		<img src="https://img.shields.io/badge/github-roblox_typescript-red.svg" alt="roblox-ts"></img>
