@@ -56,7 +56,7 @@ declare namespace RoactHooks {
 		 *  @param createValue The function used to compute the memoized value.
 		 *  @param dependencies The dependencies.
 		 */
-		useMemo: <T>(createValue: () => T, dependencies?: any[]) => T;
+		useMemo: <T>(createValue: () => T, dependencies: any[]) => T;
 		/**
 		 *  Returns a [memoized](https://en.wikipedia.org/wiki/Memoization) [binding](https://roblox.github.io/roact/advanced/bindings-and-refs/#bindings).
 		 *
